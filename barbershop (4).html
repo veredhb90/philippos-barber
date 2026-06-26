@@ -389,6 +389,10 @@ let state = {
   toast:null
 };
 let isSaving = false;
+let lastActivityAt = Date.now();
+const BARBER_IDLE_LOGOUT_MS = 60000; // auto-logout from barber view after 1 minute of inactivity
+document.addEventListener('click', ()=>{ lastActivityAt = Date.now(); });
+document.addEventListener('keydown', ()=>{ lastActivityAt = Date.now(); });
 
 /* ============== STORAGE ============== */
 function defaultSettings(){
@@ -476,6 +480,12 @@ function toWhatsAppNumber(phone){
   const digits = (phone||'').replace(/[^0-9]/g,'');
   return digits.startsWith('0') ? '972'+digits.slice(1) : digits;
 }
+function corePhoneDigits(phone){
+  let d = (phone||'').replace(/[^0-9]/g,'');
+  if(d.startsWith('972')) d = d.slice(3);
+  d = d.replace(/^0+/, '');
+  return d;
+}
 function buildMapsEmbedUrl(address){ return 'https://www.google.com/maps?q='+encodeURIComponent(address)+'&output=embed'; }
 function buildMapsDirectionsUrl(address){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(address); }
 
@@ -549,6 +559,7 @@ function renderHeader(){
           <button class="${state.view==='customer'?'active':''}" onclick="switchView('customer')">ללקוחות</button>
           <button class="${state.view==='barber'?'active':''}" onclick="switchView('barber')">לוח הספר</button>
         </div>
+        ${state.view==='barber' ? '<button class="icon-btn" title="התנתקות" onclick="logoutBarber()">⏏</button>' : ''}
         <button class="icon-btn" title="רענון" onclick="manualRefresh()">⟳</button>
       </div>
     </div>
@@ -1073,14 +1084,14 @@ async function confirmBooking(){
 
 async function searchMyAppointments(){
   const phoneRaw = document.getElementById('my-phone-input').value;
-  const phone = phoneRaw.replace(/[^0-9+]/g,'');
+  const phoneCore = corePhoneDigits(phoneRaw);
   state.myPhoneInput = phoneRaw;
-  if(phone.length<7){ showToast('נא להזין מספר טלפון תקין','error'); return; }
+  if(phoneCore.length<7){ showToast('נא להזין מספר טלפון תקין','error'); return; }
   try{
     const latest = await loadAppointments();
     state.appointments = latest;
     const today = todayStr();
-    state.myResults = latest.filter(a=>a.customerPhone===phone && a.date>=today).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+    state.myResults = latest.filter(a=>corePhoneDigits(a.customerPhone)===phoneCore && a.date>=today).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
     render();
   }catch(e){ showToast('שגיאה בחיפוש, נסו שוב','error'); }
 }
@@ -1110,10 +1121,20 @@ function closePinPrompt(){ state.pinPromptOpen=false; render(); }
 function submitPin(){
   const val = document.getElementById('pin-input').value.trim();
   if(val === (state.settings.adminPin||'1234')){
-    state.pinUnlocked = true; state.pinPromptOpen=false; state.view='barber'; render();
+    state.pinUnlocked = true; state.pinPromptOpen=false; state.view='barber';
+    lastActivityAt = Date.now();
+    render();
   } else {
     state.pinError = 'קוד שגוי, נסו שוב'; render();
   }
+}
+function logoutBarber(){
+  state.pinUnlocked = false;
+  state.view = 'customer';
+  state.barberTab = 'appointments';
+  state.manualAdd = null;
+  render();
+  showToast('התנתקת מלוח הספר');
 }
 
 function setBarberTab(tab){ state.barberTab=tab; state.manualAdd=null; render(); }
@@ -1306,6 +1327,12 @@ async function init(){
       render();
     }catch(e){}
   }, 20000);
+
+  setInterval(()=>{
+    if(state.view==='barber' && state.pinUnlocked && (Date.now()-lastActivityAt > BARBER_IDLE_LOGOUT_MS)){
+      logoutBarber();
+    }
+  }, 5000);
 }
 init();
 </script>
