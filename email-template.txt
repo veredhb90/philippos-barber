@@ -1,0 +1,19 @@
+תוכן להדבקה בתבנית (Template) באתר emailjs.com
+==================================================
+
+שדה To Email (בהגדרות התבנית, לא בגוף ההודעה):
+{{to_email}}
+
+שדה Subject:
+התראה מהאתר - {{action}}
+
+גוף ההודעה (Content):
+
+התקבלה פעולה חדשה באתר {{shop_name}}.
+
+סוג הפעולה: {{action}}
+שם הלקוח: {{customer_name}}
+טלפון הלקוח: {{customer_phone}}
+שירות: {{service_name}}
+תאריך: {{appt_date}}
+שעה: {{appt_time}}
