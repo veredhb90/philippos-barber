@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Philippos Barber Shop — קביעת תורים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Suez+One&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#1C3F73;       /* barber-pole navy — structure & headings */
+    --pine-2:#142B52;     /* deep navy — secondary text on white */
+    --paper:#F7F3EC;      /* warm off-white — page background */
+    --paper-2:#EEF1F5;    /* cool pale tint — ticket card body */
+    --ink:#17130F;        /* near-black — body text */
+    --muted:#6b6b70;
+    --brass:#C8132E;      /* barber-pole red — CTAs & brand accent */
+    --brass-light:#8FB3DE;/* soft blue — focus rings & selection */
+    --rust:#7A1620;       /* deep blood-red — danger / stamp */
+    --line:#D7DCE3;       /* steel-grey hairline */
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(45deg, rgba(20,16,10,.022) 0 2px, transparent 2px 16px);
+    color:var(--ink);
+    font-family:'Rubik',-apple-system,'Segoe UI',Arial,sans-serif;
+    min-height:100vh;
+  }
+  h1,h2,h3,.disp{font-family:'Suez One',Georgia,serif;}
+  button{font-family:inherit;}
+  ::selection{background:var(--brass-light);}
+
+  a{color:var(--pine);}
+
+  /* header */
+  header.topbar{
+    position:sticky;top:0;z-index:20;
+    background:linear-gradient(135deg,var(--pine-2),var(--pine));color:var(--paper);
+    box-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  .topbar-inner{
+    max-width:980px;margin:0 auto;padding:12px 16px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .emblem{
+    width:46px;height:46px;border-radius:50%;flex-shrink:0;
+    background:var(--pine-2);border:2px solid #fff;outline:3px solid var(--brass);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.1;}
+  .brand-name{
+    font-family:'Bebas Neue','Suez One',sans-serif;
+    font-size:25px;letter-spacing:1.5px;color:#fff;
+  }
+  .brand-tagline{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass-light);opacity:.95;margin-top:1px;}
+  .pole-stripe{
+    height:7px;
+    background:repeating-linear-gradient(45deg, var(--brass) 0 12px, #fff 12px 24px, var(--pine) 24px 36px, #fff 36px 48px);
+    animation:poleScroll 1.6s linear infinite;
+  }
+  @keyframes poleScroll{from{background-position:0 0;}to{background-position:-48px 0;}}
+  .seg{display:inline-flex;background:rgba(255,255,255,.1);border-radius:9px;padding:3px;gap:2px;}
+  .seg button{
+    background:transparent;color:var(--paper);border:none;padding:8px 16px;
+    border-radius:7px;font-weight:600;cursor:pointer;font-size:13px;transition:.15s;
+  }
+  .seg button.active{background:var(--brass);color:#fff;}
+  .seg button:not(.active):hover{background:rgba(255,255,255,.12);}
+  .icon-btn{
+    background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--paper);
+    border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:15px;line-height:1;
+  }
+  .icon-btn:hover{background:rgba(255,255,255,.12);}
+
+  /* layout */
+  main{max-width:980px;margin:0 auto;padding:22px 16px 70px;}
+  .section-title{font-size:20px;font-weight:700;color:var(--pine);margin:0 0 12px;}
+  .section-title::before{content:'✂';color:var(--brass);margin-inline-end:7px;font-size:16px;display:inline-block;}
+  .muted{color:var(--muted);font-size:13px;}
+
+  /* buttons / forms */
+  .btn{border:none;border-radius:7px;padding:10px 18px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--brass);color:#fff;}
+  .btn-primary:hover{box-shadow:0 4px 14px rgba(200,19,46,.45);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--brass);}
+  .btn-danger{background:var(--rust);color:#fff;}
+  .btn-danger:hover{box-shadow:0 4px 12px rgba(122,22,32,.45);}
+  .btn-sm{padding:6px 12px;font-size:12.5px;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+  .btn:focus-visible, input:focus-visible, select:focus-visible{outline:3px solid var(--brass-light);outline-offset:1px;}
+
+  label{display:block;font-size:12.5px;font-weight:700;color:var(--pine);margin-bottom:4px;}
+  input[type=text],input[type=tel],input[type=date],input[type=time],input[type=number],select{
+    width:100%;padding:10px 10px;border:1px solid var(--line);border-radius:7px;
+    background:#fff;font-size:16px;color:var(--ink);font-family:inherit;
+  }
+  input:focus,select:focus{outline:2px solid var(--brass);border-color:var(--brass);}
+  .field{margin-bottom:12px;}
+  .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .row > .field{flex:1;min-width:120px;}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;}
+
+  /* stepper */
+  .stepper{display:flex;align-items:center;justify-content:center;gap:0;margin:6px 0 28px;flex-wrap:wrap;}
+  .stepper .step{display:flex;align-items:center;gap:8px;}
+  .stepper .num{
+    width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--muted);
+    transition:.2s;flex-shrink:0;
+  }
+  .stepper .lbl{font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap;}
+  .stepper .step.done .num{background:var(--pine);border-color:var(--pine);color:#fff;cursor:pointer;}
+  .stepper .step.done .lbl{color:var(--pine);cursor:pointer;}
+  .stepper .step.active .num{background:var(--brass);border-color:var(--brass);color:#fff;}
+  .stepper .step.active .lbl{color:var(--ink);font-weight:700;}
+  .stepper .connector{width:30px;height:2px;background:var(--line);margin:0 8px;}
+  .stepper .connector.done{background:var(--pine);}
+
+  /* service product cards */
+  .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:10px;}
+  .svc-card{
+    background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:20px;
+    display:flex;flex-direction:column;gap:10px;cursor:pointer;text-align:right;
+    box-shadow:0 1px 2px rgba(20,20,30,.05);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .svc-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,20,30,.15);border-color:var(--brass);}
+  .svc-card .icon{font-size:36px;}
+  .svc-card .name{font-family:'Suez One',serif;font-size:19px;color:var(--pine);}
+  .svc-card .desc{font-size:13px;color:var(--muted);line-height:1.55;flex:1;}
+  .svc-card .meta-row{display:flex;justify-content:space-between;align-items:center;margin-top:4px;}
+  .svc-card .price{font-family:'Suez One',serif;font-size:23px;color:var(--brass);}
+  .svc-card .dur-badge{background:var(--paper-2);color:var(--pine);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;}
+
+  /* step summary breadcrumb */
+  .step-summary{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:18px;}
+  .step-summary .txt{font-size:14px;}
+  .step-summary .txt strong{color:var(--pine);}
+  .step-summary .change-link{background:none;border:none;color:var(--brass);font-weight:700;font-size:13px;cursor:pointer;text-decoration:underline;padding:0;}
+
+  /* week/month nav (reused for calendar header) */
+  .weeknav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .weeknav .label{font-family:'Suez One',serif;font-size:18px;color:var(--pine);}
+  .nav-btn{background:var(--pine);color:var(--paper);border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px;}
+  .nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+
+  /* calendar */
+  .calendar{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(20,20,30,.05);margin-bottom:14px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .cal-dow{text-align:center;font-size:12px;font-weight:700;color:var(--muted);padding-bottom:6px;}
+  .cal-day{
+    aspect-ratio:1;border-radius:10px;border:1.5px solid var(--line);background:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    cursor:pointer;font-weight:700;font-size:14px;color:var(--ink);position:relative;
+    transition:.15s;font-variant-numeric:tabular-nums;
+  }
+  .cal-day:hover{border-color:var(--brass);transform:translateY(-2px);}
+  .cal-day.empty{visibility:hidden;cursor:default;}
+  .cal-day.disabled{background:var(--paper-2);color:#b9c0c9;border-color:var(--paper-2);cursor:not-allowed;}
+  .cal-day.disabled:hover{transform:none;border-color:var(--paper-2);}
+  .cal-day .full-tag{font-size:8px;color:var(--rust);font-weight:700;}
+  .cal-day.today{border-color:var(--pine);}
+  .cal-day.today::after{content:'';position:absolute;bottom:5px;width:5px;height:5px;border-radius:50%;background:var(--pine);}
+  .cal-day.selected{background:var(--brass);border-color:var(--brass);color:#fff;}
+  .cal-day.selected::after{background:#fff;}
+
+  /* time grid (step 3) */
+  .time-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .slot-lg{background:#fff;border:2px solid var(--pine);color:var(--pine);border-radius:10px;padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;font-variant-numeric:tabular-nums;transition:.15s;box-shadow:0 1px 2px rgba(20,20,30,.05);}
+  .slot-lg:hover{background:var(--brass);border-color:var(--brass);color:#fff;transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,19,46,.3);}
+  .slot{background:#fff;border:1.5px solid var(--brass);color:var(--pine-2);border-radius:14px;padding:5px 9px;font-size:12px;font-weight:700;cursor:pointer;font-variant-numeric:tabular-nums;}
+  .slot:hover{background:var(--brass);color:#fff;}
+
+  /* overlay / panel */
+  .overlay{position:fixed;inset:0;background:rgba(10,12,18,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:60;}
+  .panel{background:var(--paper);border-radius:12px;padding:24px;max-width:380px;width:100%;box-shadow:0 14px 50px rgba(0,0,0,.35);max-height:90vh;overflow:auto;}
+  .panel h3{margin:0 0 4px;color:var(--pine);font-size:19px;}
+  .panel .sub{color:var(--muted);font-size:13px;margin-bottom:16px;}
+  .panel-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;}
+  .error-text{color:var(--rust);font-size:12.5px;margin:-4px 0 10px;}
+
+  .stamp-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;}
+  .stamp-badge{
+    width:104px;height:104px;border-radius:50%;border:3px double var(--rust);
+    display:flex;align-items:center;justify-content:center;color:var(--rust);
+    font-family:'Suez One',serif;font-weight:700;transform:rotate(-8deg);
+    line-height:1.15;font-size:14px;animation:stampIn .4s ease-out;
+  }
+  @keyframes stampIn{0%{transform:scale(2.1) rotate(-8deg);opacity:0;}60%{transform:scale(.92) rotate(-8deg);opacity:1;}100%{transform:scale(1) rotate(-8deg);opacity:1;}}
+  @media (prefers-reduced-motion: reduce){
+    .stamp-badge,.pole-stripe{animation:none;}
+  }
+
+  /* my appointments lookup */
+  .lookup-result-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:7px;padding:10px 12px;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+
+  /* barber tabs */
+  .tabbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+  .tabbar button{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;font-size:13px;cursor:pointer;color:var(--ink);}
+  .tabbar button.active{background:var(--pine);color:var(--paper);border-color:var(--pine);}
+
+  .appt-date-group{margin-bottom:20px;}
+  .appt-date-title{font-family:'Suez One',serif;color:var(--pine);font-weight:700;font-size:15px;border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:8px;}
+  .appt-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:7px;padding:10px 12px;margin-bottom:7px;flex-wrap:wrap;gap:8px;}
+  .appt-row .meta{font-size:12.5px;color:var(--muted);}
+  .appt-time{font-weight:700;color:var(--pine-2);font-variant-numeric:tabular-nums;min-width:96px;}
+  .appt-name{font-weight:600;}
+
+  .svc-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:7px;padding:10px 12px;margin-bottom:7px;flex-wrap:wrap;gap:8px;}
+  .svc-row .info{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;}
+  .svc-row .name{font-weight:700;}
+  .svc-row .meta{color:var(--muted);font-size:12.5px;}
+
+  .wh-row{display:grid;grid-template-columns:90px 70px 1fr 1fr;gap:10px;align-items:end;margin-bottom:10px;}
+  .wh-row .dayname{font-weight:700;color:var(--pine);padding-top:9px;}
+  .wh-toggle{display:flex;align-items:center;gap:6px;padding-top:6px;}
+
+  .blocked-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--rust);color:var(--rust);border-radius:16px;padding:6px 10px;font-size:12.5px;font-weight:600;margin:0 6px 8px 0;}
+  .blocked-chip button{background:none;border:none;color:var(--rust);cursor:pointer;font-size:14px;line-height:1;padding:0;}
+
+  .toast{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    background:var(--pine);color:var(--paper);padding:11px 18px;border-radius:8px;
+    font-size:13.5px;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:80;
+  }
+  .toast.error{background:var(--rust);}
+
+  .empty-note{color:var(--muted);font-size:13.5px;padding:20px 0;text-align:center;}
+
+  /* hero */
+  .hero{
+    display:flex;align-items:center;gap:16px;
+    background:linear-gradient(135deg,var(--pine-2),var(--pine));color:#fff;
+    border-radius:16px;padding:20px 22px;margin-bottom:22px;
+    box-shadow:0 10px 30px rgba(20,30,50,.18);position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:'';position:absolute;inset:0;opacity:.12;
+    background:repeating-linear-gradient(45deg,var(--brass) 0 14px,#fff 14px 28px,transparent 28px 56px);
+  }
+  .hero-emblem{font-size:40px;flex-shrink:0;position:relative;z-index:1;}
+  .hero-text{position:relative;z-index:1;}
+  .hero-title{font-family:'Bebas Neue','Suez One',sans-serif;font-size:26px;letter-spacing:1px;}
+  .hero-sub{font-size:13px;opacity:.9;margin-top:3px;}
+
+  /* icon badges (service icons) */
+  .icon-badge{
+    width:60px;height:60px;border-radius:50%;background:var(--paper-2);color:var(--pine);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-badge.sm{width:30px;height:30px;}
+  .icon-badge.sm svg{width:18px;height:18px;}
+  .svc-card:hover .icon-badge{background:var(--brass);color:#fff;}
+
+  /* contact / footer card */
+  .contact-card{margin-top:14px;}
+  .contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start;}
+  .contact-line{font-size:14px;margin-bottom:8px;}
+  .contact-line a{color:var(--ink);text-decoration:none;}
+  .contact-buttons{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+  .btn-whatsapp{background:#25D366;color:#fff;text-decoration:none;display:inline-flex;align-items:center;}
+  .btn-instagram{background:linear-gradient(45deg,#feda75,var(--brass) 40%,#5851db,#833ab4);color:#fff;text-decoration:none;display:inline-flex;align-items:center;}
+  .directions-link{display:inline-block;color:var(--pine);font-weight:700;font-size:13px;text-decoration:underline;margin-top:4px;}
+  .map-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--line);}
+  .map-wrap iframe{width:100%;height:220px;border:0;display:block;}
+
+  @media (max-width:700px){
+    .contact-grid{grid-template-columns:1fr;}
+  }
+
+  @media (max-width:480px){
+    .wh-row{grid-template-columns:1fr 1fr;}
+    .wh-row .dayname{grid-column:1/3;padding-top:0;}
+    .hero{padding:16px;gap:12px;}
+    .hero-title{font-size:21px;}
+    .hero-sub{font-size:12px;}
+    .hero-emblem{font-size:30px;}
+    .brand-name{font-size:20px;}
+    .stepper .lbl{display:none;}
+    .stepper .connector{width:18px;margin:0 4px;}
+    .svc-grid{grid-template-columns:1fr;}
+    .cal-grid{gap:4px;}
+    .cal-day{font-size:12.5px;border-radius:8px;}
+    .cal-day .full-tag{font-size:7px;}
+    .slot-lg{padding:11px 14px;font-size:14px;flex:1 1 calc(33% - 10px);text-align:center;}
+    .time-grid{gap:8px;}
+    .panel{padding:18px;}
+    .btn{padding:10px 14px;}
+    .contact-buttons .btn{flex:1;justify-content:center;}
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ============== AWS BACKEND (for deploying outside Claude) ==============
+   This app is built on a simple key-value storage API (window.storage).
+   Inside Claude.ai, that API already exists and needs no setup.
+   Once you host this file on your own website, window.storage does NOT
+   exist anymore — so paste the invoke URL of your API Gateway below.
+   See the matching Lambda function code provided alongside this file.
+*/
+const API_BASE_URL = ""; // paste your API Gateway invoke URL here, e.g. https://abc123xyz.execute-api.eu-west-1.amazonaws.com
+window.__STORAGE_NOT_CONFIGURED__ = false;
+(function setupStorage(){
+  if(typeof window.storage !== 'undefined') return; // already running inside Claude
+  if(API_BASE_URL){
+    window.storage = {
+      async get(key, shared){
+        const res = await fetch(API_BASE_URL+'/kv/'+encodeURIComponent(key));
+        if(!res.ok) throw new Error('not found');
+        const data = await res.json();
+        return {key, value: data.value, shared};
+      },
+      async set(key, value, shared){
+        const res = await fetch(API_BASE_URL+'/kv/'+encodeURIComponent(key), {
+          method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({value})
+        });
+        if(!res.ok) throw new Error('save failed');
+        return {key, value, shared};
+      },
+      async delete(key, shared){
+        await fetch(API_BASE_URL+'/kv/'+encodeURIComponent(key), {method:'DELETE'});
+        return {key, deleted:true, shared};
+      },
+      async list(prefix, shared){
+        const res = await fetch(API_BASE_URL+'/kv?prefix='+encodeURIComponent(prefix||''));
+        const data = await res.json();
+        return {keys: data.keys||[], prefix, shared};
+      }
+    };
+  } else {
+    window.__STORAGE_NOT_CONFIGURED__ = true;
+  }
+})();
+
+/* ============== DEFAULTS ============== */
+const DEFAULT_SERVICES = [
+  {id:'s1', name:'תספורת', duration:30, price:80, iconKey:'scissors', description:'תספורת מדויקת בעיצוב אישי, כולל שטיפה וסידור'},
+  {id:'s2', name:'תספורת וזקן', duration:30, price:100, iconKey:'razor', description:'תספורת מלאה ועיצוב זקן מקצועי בתער ובמכונה'}
+];
+const DEFAULT_HOURS = {
+  0:{enabled:true,start:'09:00',end:'19:00'},
+  1:{enabled:true,start:'09:00',end:'19:00'},
+  2:{enabled:true,start:'09:00',end:'19:00'},
+  3:{enabled:true,start:'09:00',end:'19:00'},
+  4:{enabled:true,start:'09:00',end:'19:00'},
+  5:{enabled:true,start:'09:00',end:'14:00'},
+  6:{enabled:false,start:'09:00',end:'14:00'}
+};
+const DAY_NAMES = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+const DOW_LETTERS = ['א','ב','ג','ד','ה','ו','ש'];
+const SLOT_STEP_MIN = 30;
+const WEEKS_AHEAD_MAX = 8;
+const MAX_BOOKING_DAYS_AHEAD = WEEKS_AHEAD_MAX*7;
+
+/* ============== STATE ============== */
+let state = {
+  loading:true,
+  view:'customer',
+  settings:null,
+  appointments:[],
+  selectedServiceId:null,
+  bookingStep:'service', // 'service' | 'date' | 'time'
+  selectedDate:null,
+  calendarMonthOffset:0,
+  bookingTarget:null,
+  bookingError:'',
+  lastBooked:null,
+  myPhoneInput:'',
+  myResults:null,
+  pinPromptOpen:false,
+  pinError:'',
+  pinUnlocked:false,
+  barberTab:'appointments',
+  manualAdd:null, // {date, serviceId, slots:[], chosenStart}
+  manualError:'',
+  apptFilterFrom:todayStr(),
+  apptFilterTo:'',
+  toast:null
+};
+let isSaving = false;
+
+/* ============== STORAGE ============== */
+function defaultSettings(){
+  return {
+    services:DEFAULT_SERVICES, workingHours:DEFAULT_HOURS, blockedDates:[],
+    shopName:'Philippos Barber Shop', adminPin:'1234',
+    address:'שד׳ מנחם אריאב 11, נוף הגליל', phone:'0548777542', instagramUrl:'',
+    emailNotify:{enabled:false, publicKey:'', serviceId:'', templateId:'', toEmail:''}
+  };
+}
+function migrateSettings(s){
+  let changed = false;
+  if(s.address===undefined){ s.address='שד׳ מנחם אריאב 11, נוף הגליל'; changed=true; }
+  if(s.phone===undefined){ s.phone='0548777542'; changed=true; }
+  if(s.instagramUrl===undefined){ s.instagramUrl=''; changed=true; }
+  if(!s.emailNotify){ s.emailNotify={enabled:false,publicKey:'',serviceId:'',templateId:'',toEmail:''}; changed=true; }
+  if(Array.isArray(s.services)){
+    s.services.forEach(sv=>{
+      if(!sv.iconKey){ sv.iconKey = (sv.name&&sv.name.includes('זקן')) ? 'razor':'scissors'; changed=true; }
+      if(sv.name==='תספורת וזקן' && sv.price===120){ sv.price=100; changed=true; }
+    });
+  }
+  return changed;
+}
+async function loadSettings(){
+  try{
+    const res = await window.storage.get('settings', true);
+    const s = JSON.parse(res.value);
+    if(migrateSettings(s)){ try{ await saveSettings(s); }catch(e2){} }
+    return s;
+  }catch(e){
+    const defaults = defaultSettings();
+    try{ await window.storage.set('settings', JSON.stringify(defaults), true); }catch(e2){}
+    return defaults;
+  }
+}
+async function loadAppointments(){
+  try{
+    const res = await window.storage.get('appointments', true);
+    return JSON.parse(res.value);
+  }catch(e){
+    try{ await window.storage.set('appointments', JSON.stringify([]), true); }catch(e2){}
+    return [];
+  }
+}
+async function saveSettings(s){
+  await window.storage.set('settings', JSON.stringify(s), true);
+}
+async function saveAppointments(a){
+  await window.storage.set('appointments', JSON.stringify(a), true);
+}
+
+/* ============== DATE / TIME HELPERS ============== */
+function pad(n){return n.toString().padStart(2,'0');}
+function dateToStr(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function todayDate(){const d=new Date();d.setHours(0,0,0,0);return d;}
+function todayStr(){return dateToStr(todayDate());}
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function timeToMinutes(t){const [h,m]=t.split(':').map(Number);return h*60+m;}
+function minutesToTime(m){return pad(Math.floor(m/60))+':'+pad(m%60);}
+function rangesOverlap(s1,e1,s2,e2){return s1<e2 && s2<e1;}
+function formatHebDateLong(d){return d.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});}
+function formatHebDateShort(d){return d.toLocaleDateString('he-IL',{day:'numeric',month:'numeric'});}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function fmtDuration(min){return min+" דק'";}
+
+function renderServiceIcon(key){
+  if(key==='razor'){
+    return `<svg viewBox="0 0 48 48" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="20" width="16" height="9" rx="2" stroke="currentColor" stroke-width="2.4"/>
+      <path d="M22 24.5H38" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M38 16L44 24.5L38 33" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 20V14C10 12 11.5 11 13 11C14.5 11 16 12 16 14V20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 48 48" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="11" cy="11" r="5.5" stroke="currentColor" stroke-width="2.4"/>
+    <circle cx="11" cy="37" r="5.5" stroke="currentColor" stroke-width="2.4"/>
+    <path d="M15.5 14.5L41 37" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M15.5 33.5L41 11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function toWhatsAppNumber(phone){
+  const digits = (phone||'').replace(/[^0-9]/g,'');
+  return digits.startsWith('0') ? '972'+digits.slice(1) : digits;
+}
+function buildMapsEmbedUrl(address){ return 'https://www.google.com/maps?q='+encodeURIComponent(address)+'&output=embed'; }
+function buildMapsDirectionsUrl(address){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(address); }
+
+async function sendEmailNotification(action, appt){
+  try{
+    const cfg = state.settings.emailNotify;
+    if(!cfg || !cfg.enabled || !cfg.publicKey || !cfg.serviceId || !cfg.templateId || !cfg.toEmail) return;
+    if(typeof emailjs === 'undefined') return;
+    await emailjs.send(cfg.serviceId, cfg.templateId, {
+      to_email: cfg.toEmail,
+      shop_name: state.settings.shopName,
+      action: action==='booked' ? 'הזמנה חדשה' : 'ביטול תור',
+      customer_name: appt.customerName,
+      customer_phone: appt.customerPhone,
+      service_name: appt.serviceName,
+      appt_date: appt.date,
+      appt_time: appt.start+'–'+appt.end
+    }, {publicKey: cfg.publicKey});
+  }catch(e){ /* email is best-effort; never block the booking flow */ }
+}
+
+/* ============== SLOT LOGIC ============== */
+function getSlotsForDate(dateStr, service, settings, appointments){
+  if(!service) return [];
+  const d = new Date(dateStr+'T00:00:00');
+  const weekday = d.getDay();
+  const wh = settings.workingHours[weekday];
+  if(!wh || !wh.enabled) return [];
+  if(settings.blockedDates.includes(dateStr)) return [];
+  const openMin = timeToMinutes(wh.start);
+  const closeMin = timeToMinutes(wh.end);
+  const isToday = dateStr === todayStr();
+  const now = new Date();
+  const nowMin = now.getHours()*60+now.getMinutes()+5;
+  const dayAppts = appointments.filter(a=>a.date===dateStr);
+  const slots = [];
+  for(let cursor=openMin; cursor+service.duration<=closeMin; cursor+=SLOT_STEP_MIN){
+    if(isToday && cursor<=nowMin) continue;
+    const endMin = cursor+service.duration;
+    const overlap = dayAppts.some(a=>rangesOverlap(cursor,endMin,timeToMinutes(a.start),timeToMinutes(a.end)));
+    if(!overlap) slots.push({start:minutesToTime(cursor), end:minutesToTime(endMin)});
+  }
+  return slots;
+}
+
+/* ============== RENDER ============== */
+function render(){
+  const app = document.getElementById('app');
+  if(state.loading){
+    app.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:#8a8270;">טוען...</div>';
+    return;
+  }
+  app.innerHTML = renderHeader() + '<main>' + (state.view==='customer' ? renderCustomerView() : renderBarberView()) + '</main>'
+    + renderBookingOverlay() + renderLastBookedOverlay() + renderPinOverlay() + renderToast();
+}
+
+function renderHeader(){
+  const name = state.settings.shopName || 'Philippos Barber Shop';
+  return `
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="emblem">✂</div>
+        <div class="brand-text">
+          <span class="brand-name">${escapeHtml(name)}</span>
+          <span class="brand-tagline">תספורות לגברים</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="seg">
+          <button class="${state.view==='customer'?'active':''}" onclick="switchView('customer')">ללקוחות</button>
+          <button class="${state.view==='barber'?'active':''}" onclick="switchView('barber')">לוח הספר</button>
+        </div>
+        <button class="icon-btn" title="רענון" onclick="manualRefresh()">⟳</button>
+      </div>
+    </div>
+  </header>
+  <div class="pole-stripe"></div>`;
+}
+
+function escapeHtml(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ---------- CUSTOMER VIEW ---------- */
+function renderCustomerView(){
+  const services = state.settings.services || [];
+  if(services.length===0){
+    return '<div class="empty-note">טרם הוגדרו שירותים במספרה. נסו שוב בקרוב.</div>';
+  }
+  if(!state.selectedServiceId || !services.find(s=>s.id===state.selectedServiceId)){
+    state.selectedServiceId = services[0].id;
+  }
+
+  let html = renderStepper();
+  if(state.bookingStep==='date') html += renderDateStep();
+  else if(state.bookingStep==='time') html += renderTimeStep();
+  else html += renderServiceStep();
+
+  html += renderMyAppointmentsCard();
+  html += renderContactCard();
+  return html;
+}
+
+function renderContactCard(){
+  const s = state.settings;
+  const wa = toWhatsAppNumber(s.phone);
+  let html = '<div class="card contact-card">';
+  html += '<div class="section-title" style="font-size:16px;">בואו לבקר</div>';
+  html += '<div class="contact-grid">';
+  html += '<div class="contact-info">';
+  if(s.address) html += `<div class="contact-line">📍 ${escapeHtml(s.address)}</div>`;
+  if(s.phone) html += `<div class="contact-line">📞 <a href="tel:${escapeHtml(s.phone)}">${escapeHtml(s.phone)}</a></div>`;
+  html += '<div class="contact-buttons">';
+  if(wa) html += `<a class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/${wa}">וואטסאפ</a>`;
+  if(s.instagramUrl) html += `<a class="btn btn-instagram" target="_blank" rel="noopener" href="${escapeHtml(s.instagramUrl)}">אינסטגרם</a>`;
+  html += '</div>';
+  if(s.address) html += `<a class="directions-link" target="_blank" rel="noopener" href="${buildMapsDirectionsUrl(s.address)}">פתח בגוגל מפות לניווט ›</a>`;
+  html += '</div>';
+  if(s.address) html += `<div class="map-wrap"><iframe src="${buildMapsEmbedUrl(s.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+  html += '</div></div>';
+  return html;
+}
+
+function renderStepper(){
+  const steps = [['service','1','שירות'],['date','2','תאריך'],['time','3','שעה']];
+  const order = {service:0,date:1,time:2};
+  const cur = order[state.bookingStep];
+  let html = '<div class="stepper">';
+  steps.forEach((s,i)=>{
+    const cls = i<cur ? 'done' : (i===cur ? 'active' : '');
+    const clickable = i<cur;
+    html += `<div class="step ${cls}" ${clickable?`onclick="goToStep('${s[0]}')"`:''}>
+      <div class="num">${s[1]}</div><div class="lbl">${s[2]}</div>
+    </div>`;
+    if(i<steps.length-1) html += `<div class="connector ${i<cur?'done':''}"></div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderHero(){
+  return `<div class="hero">
+    <div class="hero-emblem">✂</div>
+    <div class="hero-text">
+      <div class="hero-title">Philippos Barber Shop</div>
+      <div class="hero-sub">קבעו תור אונליין ב-30 שניות — בחרו שירות, תאריך ושעה</div>
+    </div>
+  </div>`;
+}
+
+function renderServiceStep(){
+  const services = state.settings.services;
+  let html = renderHero();
+  html += '<div class="section-title">בחירת שירות</div>';
+  html += '<div class="svc-grid">';
+  services.forEach(s=>{
+    html += `<div class="svc-card" onclick="selectService('${s.id}')">
+      <div class="icon-badge">${renderServiceIcon(s.iconKey)}</div>
+      <div class="name">${escapeHtml(s.name)}</div>
+      ${s.description?`<div class="desc">${escapeHtml(s.description)}</div>`:'<div class="desc"></div>'}
+      <div class="meta-row">
+        <span class="dur-badge">${fmtDuration(s.duration)}</span>
+        ${s.price?`<span class="price">₪${s.price}</span>`:''}
+      </div>
+      <button class="btn btn-primary" onclick="event.stopPropagation();selectService('${s.id}')">בחר שירות</button>
+    </div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderDateStep(){
+  const service = state.settings.services.find(s=>s.id===state.selectedServiceId);
+  let html = `<div class="step-summary">
+    <div class="txt">שירות נבחר: <strong>${escapeHtml(service.name)}</strong> · ${fmtDuration(service.duration)}${service.price?' · ₪'+service.price:''}</div>
+    <button class="change-link" onclick="goToStep('service')">שנה שירות</button>
+  </div>`;
+  html += '<div class="section-title">בחירת תאריך</div>';
+
+  const base = new Date(); base.setDate(1); base.setHours(0,0,0,0); base.setMonth(base.getMonth()+state.calendarMonthOffset);
+  const year = base.getFullYear(), month = base.getMonth();
+  const firstDay = new Date(year,month,1);
+  const startWeekday = firstDay.getDay();
+  const daysInMonth = new Date(year,month+1,0).getDate();
+  const cells = [];
+  for(let i=0;i<startWeekday;i++) cells.push(null);
+  for(let d=1;d<=daysInMonth;d++) cells.push(new Date(year,month,d));
+  while(cells.length%7!==0) cells.push(null);
+
+  const today = todayDate();
+  const maxDate = addDays(today, MAX_BOOKING_DAYS_AHEAD);
+  const nextMonthFirst = new Date(year,month+1,1);
+  const canGoNext = nextMonthFirst<=maxDate;
+
+  html += `<div class="calendar">
+    <div class="weeknav">
+      <button class="nav-btn" ${state.calendarMonthOffset<=0?'disabled':''} onclick="changeCalendarMonth(-1)">›</button>
+      <div class="label">${firstDay.toLocaleDateString('he-IL',{month:'long',year:'numeric'})}</div>
+      <button class="nav-btn" ${!canGoNext?'disabled':''} onclick="changeCalendarMonth(1)">‹</button>
+    </div>
+    <div class="cal-grid">`;
+  DOW_LETTERS.forEach(l=> html += `<div class="cal-dow">${l}</div>`);
+  cells.forEach(d=>{
+    if(!d){ html += '<div class="cal-day empty"></div>'; return; }
+    const dateStr = dateToStr(d);
+    const wh = state.settings.workingHours[d.getDay()];
+    const isPast = d<today;
+    const beyondMax = d>maxDate;
+    const closed = !wh || !wh.enabled || state.settings.blockedDates.includes(dateStr);
+    let full = false;
+    if(!isPast && !beyondMax && !closed){
+      full = getSlotsForDate(dateStr, service, state.settings, state.appointments).length===0;
+    }
+    const disabled = isPast || beyondMax || closed || full;
+    const isToday = dateStr===todayStr();
+    const isSelected = dateStr===state.selectedDate;
+    let cls = 'cal-day';
+    if(disabled) cls += ' disabled'; else cls += '';
+    if(isToday) cls += ' today';
+    if(isSelected && !disabled) cls += ' selected';
+    html += `<button class="${cls}" ${disabled?'disabled':''} onclick="selectCalendarDate('${dateStr}')">
+      <span>${d.getDate()}</span>
+      ${(!isPast && !beyondMax && !closed && full)?'<span class="full-tag">מלא</span>':''}
+    </button>`;
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function renderTimeStep(){
+  const service = state.settings.services.find(s=>s.id===state.selectedServiceId);
+  const d = new Date(state.selectedDate+'T00:00:00');
+  let html = `<div class="step-summary">
+    <div class="txt">${escapeHtml(service.name)} · <strong>${formatHebDateLong(d)}</strong></div>
+    <button class="change-link" onclick="goToStep('date')">שנה תאריך</button>
+  </div>`;
+  html += '<div class="section-title">בחירת שעה</div>';
+  const slots = getSlotsForDate(state.selectedDate, service, state.settings, state.appointments);
+  if(slots.length===0){
+    html += '<div class="empty-note">אין שעות פנויות בתאריך זה. אפשר לבחור תאריך אחר.</div>';
+  } else {
+    html += '<div class="time-grid">' + slots.map(s=>`<button class="slot-lg" onclick="openBooking('${state.selectedDate}','${s.start}','${s.end}')">${s.start}</button>`).join('') + '</div>';
+  }
+  return html;
+}
+
+function renderMyAppointmentsCard(){
+  let html = '<div class="card" style="margin-top:8px;">';
+  html += '<div class="section-title" style="font-size:16px;">התורים שלי</div>';
+  html += `<div class="row" style="margin-bottom:6px;">
+    <div class="field"><input type="tel" id="my-phone-input" placeholder="מספר טלפון" value="${escapeHtml(state.myPhoneInput)}"></div>
+    <div class="field" style="flex:0;"><button class="btn btn-ghost" onclick="searchMyAppointments()">חפש</button></div>
+  </div>`;
+  if(state.myResults!==null){
+    if(state.myResults.length===0){
+      html += '<div class="muted">לא נמצאו תורים עתידיים למספר הזה.</div>';
+    } else {
+      html += state.myResults.map(a=>{
+        const d = new Date(a.date+'T00:00:00');
+        return `<div class="lookup-result-row">
+          <div><strong>${formatHebDateLong(d)}</strong> · ${a.start}–${a.end} · ${escapeHtml(a.serviceName)}</div>
+          <button class="btn btn-danger btn-sm" onclick="cancelMyAppointment('${a.id}')">בטל תור</button>
+        </div>`;
+      }).join('');
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ---------- BOOKING OVERLAY ---------- */
+function renderBookingOverlay(){
+  if(!state.bookingTarget) return '';
+  const service = state.settings.services.find(s=>s.id===state.selectedServiceId);
+  const d = new Date(state.bookingTarget.date+'T00:00:00');
+  return `<div class="overlay" onclick="if(event.target===this) closeBooking()">
+    <div class="panel">
+      <h3>אישור תור</h3>
+      <div class="sub">${escapeHtml(service.name)} · ${formatHebDateLong(d)} · ${state.bookingTarget.start}–${state.bookingTarget.end}</div>
+      ${state.bookingError?`<div class="error-text">${escapeHtml(state.bookingError)}</div>`:''}
+      <div class="field"><label>שם מלא</label><input type="text" id="bk-name"></div>
+      <div class="field"><label>טלפון</label><input type="tel" id="bk-phone"></div>
+      <div class="panel-actions">
+        <button class="btn btn-ghost" onclick="closeBooking()">ביטול</button>
+        <button class="btn btn-primary" onclick="confirmBooking()">אשר תור</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderLastBookedOverlay(){
+  if(!state.lastBooked) return '';
+  const a = state.lastBooked;
+  const d = new Date(a.date+'T00:00:00');
+  return `<div class="overlay" onclick="if(event.target===this) closeLastBooked()">
+    <div class="panel">
+      <div class="stamp-wrap">
+        <div class="stamp-badge">אושר<br>✓</div>
+        <h3 style="margin:0;">התור נקבע!</h3>
+        <div class="sub" style="margin:0;">${escapeHtml(a.serviceName)}<br>${formatHebDateLong(d)} · ${a.start}–${a.end}</div>
+        <button class="btn btn-primary" onclick="closeLastBooked()">סגור</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- PIN OVERLAY ---------- */
+function renderPinOverlay(){
+  if(!state.pinPromptOpen) return '';
+  return `<div class="overlay" onclick="if(event.target===this) closePinPrompt()">
+    <div class="panel">
+      <h3>כניסת ספר</h3>
+      <div class="sub">הזינו קוד גישה לניהול</div>
+      ${state.pinError?`<div class="error-text">${escapeHtml(state.pinError)}</div>`:''}
+      <div class="field"><input type="text" id="pin-input" inputmode="numeric" autofocus></div>
+      <div class="panel-actions">
+        <button class="btn btn-ghost" onclick="closePinPrompt()">ביטול</button>
+        <button class="btn btn-primary" onclick="submitPin()">כניסה</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- TOAST ---------- */
+function renderToast(){
+  if(!state.toast) return '';
+  return `<div class="toast ${state.toast.type==='error'?'error':''}">${escapeHtml(state.toast.message)}</div>`;
+}
+function showToast(message, type){
+  state.toast = {message, type};
+  render();
+  setTimeout(()=>{ state.toast=null; render(); }, 2600);
+}
+
+/* ---------- BARBER VIEW ---------- */
+function renderBarberView(){
+  const tabs = [
+    ['appointments','תורים'],
+    ['services','שירותים'],
+    ['hours','שעות פעילות'],
+    ['blocked','ימים חסומים'],
+    ['general','כללי']
+  ];
+  let html = '<div class="tabbar">' + tabs.map(([key,label])=>
+    `<button class="${state.barberTab===key?'active':''}" onclick="setBarberTab('${key}')">${label}</button>`
+  ).join('') + '</div>';
+
+  if(state.barberTab==='appointments') html += renderApptsTab();
+  else if(state.barberTab==='services') html += renderServicesTab();
+  else if(state.barberTab==='hours') html += renderHoursTab();
+  else if(state.barberTab==='blocked') html += renderBlockedTab();
+  else if(state.barberTab==='general') html += renderGeneralTab();
+
+  return html;
+}
+
+function renderApptsTab(){
+  let html = renderManualAddBlock();
+  let list = state.appointments.filter(a=>
+    (!state.apptFilterFrom || a.date>=state.apptFilterFrom) &&
+    (!state.apptFilterTo || a.date<=state.apptFilterTo)
+  );
+  list = list.slice().sort((a,b)=> (a.date+a.start).localeCompare(b.date+b.start));
+  html += `<div class="section-title" style="margin:18px 0 10px;">תורים (${list.length})</div>
+  <div class="card" style="margin-bottom:16px;">
+    <div class="row">
+      <div class="field"><label>מתאריך</label><input type="date" id="appt-filter-from" value="${state.apptFilterFrom}" onchange="setApptFilter('from',this.value)"></div>
+      <div class="field"><label>עד תאריך</label><input type="date" id="appt-filter-to" value="${state.apptFilterTo}" onchange="setApptFilter('to',this.value)"></div>
+    </div>
+    <div class="row" style="gap:8px;">
+      <button class="btn btn-ghost btn-sm" onclick="apptFilterPreset('upcoming')">מהיום והלאה</button>
+      <button class="btn btn-ghost btn-sm" onclick="apptFilterPreset('month')">החודש הזה</button>
+      <button class="btn btn-ghost btn-sm" onclick="apptFilterPreset('year')">השנה הזו</button>
+      <button class="btn btn-ghost btn-sm" onclick="apptFilterPreset('all')">כל ההיסטוריה</button>
+    </div>
+  </div>`;
+  if(list.length===0){
+    html += '<div class="empty-note">אין תורים בטווח התאריכים שנבחר.</div>';
+    return html;
+  }
+  const groups = {};
+  list.forEach(a=>{ (groups[a.date] = groups[a.date]||[]).push(a); });
+  Object.keys(groups).sort().forEach(dateStr=>{
+    const d = new Date(dateStr+'T00:00:00');
+    html += `<div class="appt-date-group"><div class="appt-date-title">${formatHebDateLong(d)}</div>`;
+    groups[dateStr].forEach(a=>{
+      html += `<div class="appt-row">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <span class="appt-time">${a.start}–${a.end}</span>
+          <span class="appt-name">${escapeHtml(a.customerName)}</span>
+          <span class="meta">${escapeHtml(a.serviceName)} · ${escapeHtml(a.customerPhone)}</span>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="cancelAppointmentBarber('${a.id}')">ביטול</button>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+function renderManualAddBlock(){
+  if(!state.manualAdd){
+    return '<button class="btn btn-primary" onclick="openManualAdd()">+ הוספת תור ידנית</button>';
+  }
+  const ma = state.manualAdd;
+  const services = state.settings.services;
+  let html = '<div class="card" style="margin-bottom:6px;"><h3 style="margin:0 0 10px;color:var(--pine);font-size:16px;">תור ידני (טלפוני / הליכה)</h3>';
+  if(state.manualError) html += `<div class="error-text">${escapeHtml(state.manualError)}</div>`;
+  html += `<div class="row">
+    <div class="field"><label>תאריך</label><input type="date" id="ma-date" min="${todayStr()}" value="${ma.date||''}" onchange="manualAddDateChange(this.value)"></div>
+    <div class="field"><label>שירות</label><select id="ma-service" onchange="manualAddServiceChange(this.value)">
+      ${services.map(s=>`<option value="${s.id}" ${s.id===ma.serviceId?'selected':''}>${escapeHtml(s.name)} (${fmtDuration(s.duration)})</option>`).join('')}
+    </select></div>
+  </div>`;
+  if(ma.date && ma.serviceId){
+    if(ma.slots.length===0){
+      html += '<div class="muted" style="margin-bottom:10px;">אין שעות פנויות בתאריך זה.</div>';
+    } else {
+      html += `<div class="field"><label>שעה</label><select id="ma-slot">
+        ${ma.slots.map(s=>`<option value="${s.start}|${s.end}">${s.start}–${s.end}</option>`).join('')}
+      </select></div>
+      <div class="row">
+        <div class="field"><label>שם הלקוח</label><input type="text" id="ma-name"></div>
+        <div class="field"><label>טלפון</label><input type="tel" id="ma-phone"></div>
+      </div>`;
+    }
+  }
+  html += `<div class="panel-actions">
+    <button class="btn btn-ghost" onclick="closeManualAdd()">ביטול</button>
+    ${ma.date && ma.serviceId && ma.slots.length>0 ? '<button class="btn btn-primary" onclick="submitManualAdd()">הוסף תור</button>' : ''}
+  </div></div>`;
+  return html;
+}
+
+function renderServicesTab(){
+  const services = state.settings.services;
+  let html = '<div class="section-title">שירותים</div>';
+  services.forEach(s=>{
+    html += `<div class="svc-row">
+      <div class="info"><span class="icon-badge sm">${renderServiceIcon(s.iconKey)}</span><span class="name">${escapeHtml(s.name)}</span><span class="meta">${fmtDuration(s.duration)}${s.price?' · ₪'+s.price:''}${s.description?' · '+escapeHtml(s.description):''}</span></div>
+      <button class="btn btn-danger btn-sm" onclick="deleteService('${s.id}')">מחק</button>
+    </div>`;
+  });
+  html += `<div class="card" style="margin-top:14px;">
+    <h3 style="margin:0 0 10px;color:var(--pine);font-size:15px;">הוספת שירות</h3>
+    <div class="row">
+      <div class="field"><label>שם השירות</label><input type="text" id="ns-name"></div>
+      <div class="field"><label>משך (דקות)</label><input type="number" id="ns-duration" value="30" min="5" step="5"></div>
+      <div class="field"><label>מחיר (₪, לא חובה)</label><input type="number" id="ns-price" min="0"></div>
+    </div>
+    <div class="field"><label>תיאור קצר (לא חובה)</label><input type="text" id="ns-description"></div>
+    <button class="btn btn-primary" onclick="addService()">הוסף שירות</button>
+  </div>`;
+  return html;
+}
+
+function renderHoursTab(){
+  let html = '<div class="section-title">שעות פעילות</div>';
+  for(let i=0;i<7;i++){
+    const wh = state.settings.workingHours[i] || {enabled:false,start:'09:00',end:'19:00'};
+    html += `<div class="wh-row">
+      <div class="dayname">${DAY_NAMES[i]}</div>
+      <div class="wh-toggle"><input type="checkbox" id="wh-${i}-enabled" ${wh.enabled?'checked':''}> <span class="muted">פתוח</span></div>
+      <div class="field"><label>משעה</label><input type="time" id="wh-${i}-start" value="${wh.start}"></div>
+      <div class="field"><label>עד שעה</label><input type="time" id="wh-${i}-end" value="${wh.end}"></div>
+    </div>`;
+  }
+  html += '<button class="btn btn-primary" onclick="saveHours()">שמירת שעות פעילות</button>';
+  return html;
+}
+
+function renderBlockedTab(){
+  const blocked = state.settings.blockedDates.slice().sort();
+  let html = '<div class="section-title">ימים חסומים (חגים / חופשה)</div>';
+  html += `<div class="row" style="align-items:end;">
+    <div class="field"><input type="date" id="block-date-input" min="${todayStr()}"></div>
+    <div class="field" style="flex:0;"><button class="btn btn-primary" onclick="addBlockedDate()">חסום תאריך</button></div>
+  </div>`;
+  if(blocked.length===0){
+    html += '<div class="muted">אין ימים חסומים.</div>';
+  } else {
+    html += '<div>' + blocked.map(dt=>{
+      const d = new Date(dt+'T00:00:00');
+      return `<span class="blocked-chip">${formatHebDateLong(d)} <button onclick="removeBlockedDate('${dt}')">×</button></span>`;
+    }).join('') + '</div>';
+  }
+  return html;
+}
+
+function renderGeneralTab(){
+  const en = state.settings.emailNotify || {};
+  return `<div class="section-title">הגדרות כלליות</div>
+  <div class="card" style="margin-bottom:16px;">
+    <div class="field"><label>שם המספרה</label><input type="text" id="gen-shopname" value="${escapeHtml(state.settings.shopName)}"></div>
+    <div class="field"><label>קוד גישה לניהול (PIN)</label><input type="text" id="gen-pin" value="${escapeHtml(state.settings.adminPin)}" inputmode="numeric"></div>
+    <div class="muted" style="margin-bottom:4px;">⚠️ זהו קוד בסיסי בצד הלקוח בלבד — לא הגנת אבטחה אמיתית. למערכת בעלת משתמשים מרובים ואבטחה מלאה יש צורך בשרת עם הזדהות.</div>
+    <button class="btn btn-primary" onclick="saveGeneral()">שמירה</button>
+  </div>
+
+  <div class="section-title" style="font-size:16px;">פרטי המספרה (מוצג ללקוחות)</div>
+  <div class="card" style="margin-bottom:16px;">
+    <div class="field"><label>כתובת</label><input type="text" id="gen-address" value="${escapeHtml(state.settings.address)}"></div>
+    <div class="row">
+      <div class="field"><label>טלפון</label><input type="tel" id="gen-phone" value="${escapeHtml(state.settings.phone)}"></div>
+      <div class="field"><label>קישור לאינסטגרם (לא חובה)</label><input type="text" id="gen-instagram" placeholder="https://instagram.com/..." value="${escapeHtml(state.settings.instagramUrl)}"></div>
+    </div>
+    <button class="btn btn-primary" onclick="saveGeneral()">שמירה</button>
+  </div>
+
+  <div class="section-title" style="font-size:16px;">התראה במייל בכל הזמנה/ביטול</div>
+  <div class="card">
+    <div class="muted" style="margin-bottom:12px;">לשליחת מייל אמיתי דרוש חיבור חינמי וקצר ל-EmailJS (emailjs.com) — נרשמים, מחברים תיבת מייל ויוצרים תבנית. בלי החיבור הזה, ההתראות לא יישלחו בפועל.</div>
+    <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer;">
+      <input type="checkbox" id="gen-email-enabled" ${en.enabled?'checked':''}> <span>הפעל התראות במייל</span>
+    </label>
+    <div class="field"><label>כתובת מייל לקבלת התראות</label><input type="text" id="gen-email-to" value="${escapeHtml(en.toEmail)}"></div>
+    <div class="row">
+      <div class="field"><label>EmailJS Public Key</label><input type="text" id="gen-email-pubkey" value="${escapeHtml(en.publicKey)}"></div>
+      <div class="field"><label>Service ID</label><input type="text" id="gen-email-service" value="${escapeHtml(en.serviceId)}"></div>
+      <div class="field"><label>Template ID</label><input type="text" id="gen-email-template" value="${escapeHtml(en.templateId)}"></div>
+    </div>
+    <button class="btn btn-primary" onclick="saveGeneral()">שמירה</button>
+  </div>`;
+}
+
+/* ============== ACTIONS ============== */
+function selectService(id){
+  state.selectedServiceId=id;
+  state.bookingStep='date';
+  state.selectedDate=null;
+  state.calendarMonthOffset=0;
+  render();
+}
+function goToStep(step){ state.bookingStep=step; render(); }
+function changeCalendarMonth(delta){
+  const next = state.calendarMonthOffset+delta;
+  if(next<0) return;
+  state.calendarMonthOffset = next; render();
+}
+function selectCalendarDate(dateStr){
+  state.selectedDate = dateStr;
+  state.bookingStep = 'time';
+  render();
+}
+function openBooking(date,start,end){
+  state.bookingTarget = {date,start,end};
+  state.bookingError='';
+  render();
+}
+function closeBooking(){ state.bookingTarget=null; state.bookingError=''; render(); }
+function closeLastBooked(){
+  state.lastBooked=null;
+  state.bookingStep='service';
+  state.selectedDate=null;
+  render();
+}
+
+async function confirmBooking(){
+  if(isSaving) return;
+  const nameEl = document.getElementById('bk-name');
+  const phoneEl = document.getElementById('bk-phone');
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.replace(/[^0-9+]/g,'');
+  if(!name || phone.length<7){
+    state.bookingError = 'נא למלא שם ומספר טלפון תקין'; render(); return;
+  }
+  isSaving = true;
+  const target = state.bookingTarget;
+  try{
+    const latest = await loadAppointments();
+    const overlap = latest.some(a=>a.date===target.date && rangesOverlap(timeToMinutes(target.start),timeToMinutes(target.end),timeToMinutes(a.start),timeToMinutes(a.end)));
+    if(overlap){
+      state.appointments = latest;
+      state.bookingTarget = null;
+      isSaving=false;
+      showToast('השעה הזו נתפסה ממש עכשיו, נסו שעה אחרת', 'error');
+      return;
+    }
+    const service = state.settings.services.find(s=>s.id===state.selectedServiceId);
+    const newAppt = {id:genId(), date:target.date, start:target.start, end:target.end, serviceId:service.id, serviceName:service.name, duration:service.duration, customerName:name, customerPhone:phone, createdAt:Date.now()};
+    latest.push(newAppt);
+    await saveAppointments(latest);
+    state.appointments = latest;
+    state.bookingTarget = null;
+    state.lastBooked = newAppt;
+    isSaving=false;
+    render();
+    sendEmailNotification('booked', newAppt);
+  }catch(e){
+    isSaving=false;
+    showToast('שגיאה בשמירת התור, נסו שוב', 'error');
+  }
+}
+
+async function searchMyAppointments(){
+  const phoneRaw = document.getElementById('my-phone-input').value;
+  const phone = phoneRaw.replace(/[^0-9+]/g,'');
+  state.myPhoneInput = phoneRaw;
+  if(phone.length<7){ showToast('נא להזין מספר טלפון תקין','error'); return; }
+  try{
+    const latest = await loadAppointments();
+    state.appointments = latest;
+    const today = todayStr();
+    state.myResults = latest.filter(a=>a.customerPhone===phone && a.date>=today).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+    render();
+  }catch(e){ showToast('שגיאה בחיפוש, נסו שוב','error'); }
+}
+
+async function cancelMyAppointment(id){
+  if(!confirm('לבטל את התור?')) return;
+  try{
+    const latest = await loadAppointments();
+    const cancelled = latest.find(a=>a.id===id);
+    const updated = latest.filter(a=>a.id!==id);
+    await saveAppointments(updated);
+    state.appointments = updated;
+    if(state.myResults) state.myResults = state.myResults.filter(a=>a.id!==id);
+    render();
+    showToast('התור בוטל');
+    if(cancelled) sendEmailNotification('cancelled', cancelled);
+  }catch(e){ showToast('שגיאה בביטול, נסו שוב','error'); }
+}
+
+function switchView(view){
+  if(view==='barber' && !state.pinUnlocked){
+    state.pinPromptOpen = true; state.pinError=''; render(); return;
+  }
+  state.view = view; render();
+}
+function closePinPrompt(){ state.pinPromptOpen=false; render(); }
+function submitPin(){
+  const val = document.getElementById('pin-input').value.trim();
+  if(val === (state.settings.adminPin||'1234')){
+    state.pinUnlocked = true; state.pinPromptOpen=false; state.view='barber'; render();
+  } else {
+    state.pinError = 'קוד שגוי, נסו שוב'; render();
+  }
+}
+
+function setBarberTab(tab){ state.barberTab=tab; state.manualAdd=null; render(); }
+function setApptFilter(which, val){
+  if(which==='from') state.apptFilterFrom = val; else state.apptFilterTo = val;
+  render();
+}
+function apptFilterPreset(preset){
+  const today = new Date(); today.setHours(0,0,0,0);
+  if(preset==='upcoming'){ state.apptFilterFrom = todayStr(); state.apptFilterTo=''; }
+  else if(preset==='month'){
+    const first = new Date(today.getFullYear(), today.getMonth(), 1);
+    const last = new Date(today.getFullYear(), today.getMonth()+1, 0);
+    state.apptFilterFrom = dateToStr(first); state.apptFilterTo = dateToStr(last);
+  } else if(preset==='year'){
+    state.apptFilterFrom = today.getFullYear()+'-01-01';
+    state.apptFilterTo = today.getFullYear()+'-12-31';
+  } else { state.apptFilterFrom=''; state.apptFilterTo=''; }
+  render();
+}
+
+function openManualAdd(){
+  state.manualAdd = {date:'', serviceId: state.settings.services[0] ? state.settings.services[0].id : '', slots:[]};
+  state.manualError='';
+  render();
+}
+function closeManualAdd(){ state.manualAdd=null; render(); }
+function recomputeManualSlots(){
+  const ma = state.manualAdd;
+  if(ma.date && ma.serviceId){
+    const service = state.settings.services.find(s=>s.id===ma.serviceId);
+    ma.slots = getSlotsForDate(ma.date, service, state.settings, state.appointments);
+  } else {
+    ma.slots = [];
+  }
+}
+function manualAddDateChange(val){ state.manualAdd.date=val; recomputeManualSlots(); render(); }
+function manualAddServiceChange(val){ state.manualAdd.serviceId=val; recomputeManualSlots(); render(); }
+
+async function submitManualAdd(){
+  if(isSaving) return;
+  const ma = state.manualAdd;
+  const slotEl = document.getElementById('ma-slot');
+  const nameEl = document.getElementById('ma-name');
+  const phoneEl = document.getElementById('ma-phone');
+  if(!slotEl){ return; }
+  const [start,end] = slotEl.value.split('|');
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.replace(/[^0-9+]/g,'');
+  if(!name || phone.length<7){ state.manualError='נא למלא שם ומספר טלפון תקין'; render(); return; }
+  isSaving=true;
+  try{
+    const latest = await loadAppointments();
+    const overlap = latest.some(a=>a.date===ma.date && rangesOverlap(timeToMinutes(start),timeToMinutes(end),timeToMinutes(a.start),timeToMinutes(a.end)));
+    if(overlap){
+      state.appointments = latest;
+      recomputeManualSlots();
+      state.manualError = 'השעה הזו נתפסה, בחרו שעה אחרת';
+      isSaving=false; render(); return;
+    }
+    const service = state.settings.services.find(s=>s.id===ma.serviceId);
+    const newAppt = {id:genId(), date:ma.date, start, end, serviceId:service.id, serviceName:service.name, duration:service.duration, customerName:name, customerPhone:phone, createdAt:Date.now()};
+    latest.push(newAppt);
+    await saveAppointments(latest);
+    state.appointments = latest;
+    state.manualAdd = null;
+    isSaving=false;
+    render();
+    showToast('התור נוסף');
+  }catch(e){ isSaving=false; state.manualError='שגיאה בשמירה, נסו שוב'; render(); }
+}
+
+async function cancelAppointmentBarber(id){
+  if(!confirm('לבטל את התור?')) return;
+  try{
+    const latest = await loadAppointments();
+    const updated = latest.filter(a=>a.id!==id);
+    await saveAppointments(updated);
+    state.appointments = updated;
+    render();
+    showToast('התור בוטל');
+  }catch(e){ showToast('שגיאה בביטול, נסו שוב','error'); }
+}
+
+async function addService(){
+  const name = document.getElementById('ns-name').value.trim();
+  const duration = parseInt(document.getElementById('ns-duration').value,10);
+  const priceRaw = document.getElementById('ns-price').value;
+  const price = priceRaw ? parseInt(priceRaw,10) : null;
+  const description = document.getElementById('ns-description').value.trim();
+  if(!name || !duration || duration<5){ showToast('נא למלא שם ומשך תקין','error'); return; }
+  const s = state.settings;
+  s.services.push({id:genId(), name, duration, price, description, iconKey:'scissors'});
+  try{ await saveSettings(s); render(); showToast('השירות נוסף'); }
+  catch(e){ showToast('שגיאה בשמירה','error'); }
+}
+async function deleteService(id){
+  if(!confirm('למחוק את השירות?')) return;
+  const s = state.settings;
+  s.services = s.services.filter(x=>x.id!==id);
+  try{ await saveSettings(s); render(); }
+  catch(e){ showToast('שגיאה בשמירה','error'); }
+}
+
+async function saveHours(){
+  const wh = {};
+  for(let i=0;i<7;i++){
+    wh[i] = {
+      enabled: document.getElementById('wh-'+i+'-enabled').checked,
+      start: document.getElementById('wh-'+i+'-start').value,
+      end: document.getElementById('wh-'+i+'-end').value
+    };
+  }
+  state.settings.workingHours = wh;
+  try{ await saveSettings(state.settings); render(); showToast('שעות הפעילות נשמרו'); }
+  catch(e){ showToast('שגיאה בשמירה','error'); }
+}
+
+async function addBlockedDate(){
+  const val = document.getElementById('block-date-input').value;
+  if(!val) return;
+  if(!state.settings.blockedDates.includes(val)){
+    state.settings.blockedDates.push(val);
+    try{ await saveSettings(state.settings); render(); }
+    catch(e){ showToast('שגיאה בשמירה','error'); }
+  }
+}
+async function removeBlockedDate(val){
+  state.settings.blockedDates = state.settings.blockedDates.filter(d=>d!==val);
+  try{ await saveSettings(state.settings); render(); }
+  catch(e){ showToast('שגיאה בשמירה','error'); }
+}
+
+async function saveGeneral(){
+  const shopName = document.getElementById('gen-shopname').value.trim() || 'Philippos Barber Shop';
+  const adminPin = document.getElementById('gen-pin').value.trim() || '1234';
+  state.settings.shopName = shopName;
+  state.settings.adminPin = adminPin;
+  state.settings.address = document.getElementById('gen-address').value.trim();
+  state.settings.phone = document.getElementById('gen-phone').value.trim();
+  state.settings.instagramUrl = document.getElementById('gen-instagram').value.trim();
+  state.settings.emailNotify = {
+    enabled: document.getElementById('gen-email-enabled').checked,
+    toEmail: document.getElementById('gen-email-to').value.trim(),
+    publicKey: document.getElementById('gen-email-pubkey').value.trim(),
+    serviceId: document.getElementById('gen-email-service').value.trim(),
+    templateId: document.getElementById('gen-email-template').value.trim()
+  };
+  try{ await saveSettings(state.settings); render(); showToast('ההגדרות נשמרו'); }
+  catch(e){ showToast('שגיאה בשמירה','error'); }
+}
+
+async function manualRefresh(){
+  try{
+    const [settings, appointments] = await Promise.all([loadSettings(), loadAppointments()]);
+    state.settings = settings; state.appointments = appointments;
+    render();
+    showToast('רוענן');
+  }catch(e){ showToast('שגיאה ברענון','error'); }
+}
+
+/* ============== INIT ============== */
+async function init(){
+  if(window.__STORAGE_NOT_CONFIGURED__){
+    document.getElementById('app').innerHTML = `
+      <div style="max-width:560px;margin:60px auto;padding:24px;text-align:center;font-family:'Rubik',sans-serif;direction:rtl;">
+        <div style="font-size:38px;margin-bottom:10px;">⚠️</div>
+        <h2 style="color:#1C3F73;">המערכת עדיין לא מחוברת למסד נתונים</h2>
+        <p style="color:#6b6b70;line-height:1.6;">
+          האפליקציה הזו פועלת מצוין בתוך Claude, אבל ברגע שמעלים אותה לאינטרנט צריך לחבר אותה
+          לשרת משלכם (AWS) כדי שההזמנות יישמרו ויהיו משותפות לכל הלקוחות.
+          פתחו את קובץ ה-HTML בעורך טקסט, חפשו <code>API_BASE_URL</code> בתחילת הקוד, והדביקו שם
+          את כתובת ה-API שיצרתם. ההסבר המלא נמצא בשיחה עם Claude.
+        </p>
+      </div>`;
+    return;
+  }
+  const [settings, appointments] = await Promise.all([loadSettings(), loadAppointments()]);
+  state.settings = settings;
+  state.appointments = appointments;
+  state.loading = false;
+  render();
+
+  setInterval(async ()=>{
+    const busy = state.bookingTarget || state.manualAdd || state.pinPromptOpen || state.lastBooked;
+    if(busy) return;
+    try{
+      const [s,a] = await Promise.all([loadSettings(), loadAppointments()]);
+      state.settings = s; state.appointments = a;
+      render();
+    }catch(e){}
+  }, 20000);
+}
+init();
+</script>
+</body>
+</html>
